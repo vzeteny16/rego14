@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="hu">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Regő OS - személyes születésnapi küldetéskonzol."
+    />
+    <meta name="theme-color" content="#080a0f" />
+    <title>Regő OS</title>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero-panel" aria-labelledby="app-title">
+        <div class="ambient-grid" aria-hidden="true"></div>
+        <div class="scanline" aria-hidden="true"></div>
+
+        <nav class="topbar" aria-label="Regő OS status">
+          <div class="brand-lockup">
+            <span class="status-dot"></span>
+            <span>Regő OS</span>
+          </div>
+          <div class="system-chip">Level 14 unlocked</div>
+        </nav>
+
+        <div class="hero-content">
+          <div class="level-badge" aria-label="Level 14">
+            <span>14</span>
+          </div>
+          <div>
+            <p class="eyebrow">Szülinapi küldetéskonzol</p>
+            <h1 id="app-title">Regő OS</h1>
+            <p class="hero-copy">
+              Rakd össze, milyen közös programot szeretnél. Te választasz, én
+              megszervezem.
+            </p>
+          </div>
+        </div>
+
+        <div class="mission-brief">
+          <div>
+            <span class="brief-label">Küldetés</span>
+            <strong>Válaszd ki, milyen programot szeretnél.</strong>
+          </div>
+          <p>
+            Ha kitöltötted, a többit rám bízhatod: időpont, hely és szervezés.
+          </p>
+        </div>
+      </section>
+
+      <section class="console-grid" aria-label="Regő OS választások">
+        <aside class="profile-card panel">
+          <div class="profile-top">
+            <div>
+              <span class="section-kicker">Profil</span>
+              <h2>Varga Regő</h2>
+            </div>
+            <span class="profile-rank">LVL 14</span>
+          </div>
+          <div class="progress-block">
+            <div class="progress-row">
+              <span>Kitöltés</span>
+              <span id="progressText">0%</span>
+            </div>
+            <div class="progress-track">
+              <span id="progressBar"></span>
+            </div>
+          </div>
+          <ul class="signal-list">
+            <li><span></span>Közös program Zétivel</li>
+            <li><span></span>Te döntöd el, mi legyen</li>
+            <li><span></span>A kaja külön választás</li>
+          </ul>
+        </aside>
+
+        <form id="missionForm" class="mission-form">
+          <section class="choice-section panel" data-group="program">
+            <div class="section-heading">
+              <div>
+                <span class="section-kicker">01 / Fő választás</span>
+                <h2>Program</h2>
+              </div>
+              <span class="required-pill">kötelező</span>
+            </div>
+            <div class="choice-grid">
+              <button type="button" class="choice-card" data-value="Biliárd">
+                <span class="choice-icon">◆</span>
+                <strong>Biliárd</strong>
+                <small>Menjünk el biliárdozni.</small>
+              </button>
+              <button type="button" class="choice-card" data-value="Darts">
+                <span class="choice-icon">◇</span>
+                <strong>Darts</strong>
+                <small>Nyomjunk egy darts-meccset.</small>
+              </button>
+              <button type="button" class="choice-card" data-value="Mozi">
+                <span class="choice-icon">◈</span>
+                <strong>Mozi</strong>
+                <small>Válassz filmet, nézzük meg moziban.</small>
+              </button>
+              <button type="button" class="choice-card" data-value="Közös gaming">
+                <span class="choice-icon">▣</span>
+                <strong>Közös gaming</strong>
+                <small>Te választasz játékot, én jövök.</small>
+              </button>
+              <button type="button" class="choice-card" data-value="Kosarazás">
+                <span class="choice-icon">●</span>
+                <strong>Kosarazás</strong>
+                <small>Dobáljunk vagy játsszunk egyet.</small>
+              </button>
+              <button type="button" class="choice-card" data-value="Kajálós program">
+                <span class="choice-icon">▰</span>
+                <strong>Kajálós program</strong>
+                <small>Legyen a közös kaja a fő program.</small>
+              </button>
+            </div>
+          </section>
+
+          <section class="choice-section panel" data-group="food">
+            <div class="section-heading">
+              <div>
+                <span class="section-kicker">02 / Kaja választás</span>
+                <h2>Kaja</h2>
+              </div>
+              <span class="required-pill">kötelező</span>
+            </div>
+            <div class="choice-grid">
+              <button type="button" class="choice-card" data-value="Gyorskajálda">
+                <span class="choice-icon">▸</span>
+                <strong>Gyorskajálda</strong>
+                <small>McDonald's, KFC vagy amit választasz.</small>
+              </button>
+              <button type="button" class="choice-card" data-value="Pizza">
+                <span class="choice-icon">▲</span>
+                <strong>Pizza</strong>
+                <small>Pizza ott, ahol neked szimpatikus.</small>
+              </button>
+              <button type="button" class="choice-card" data-value="Kézműves hamburger">
+                <span class="choice-icon">⬡</span>
+                <strong>Kézműves hamburger</strong>
+                <small>Egy jobb burgeres helyen.</small>
+              </button>
+              <button type="button" class="choice-card" data-value="Drágább étterem">
+                <span class="choice-icon">✦</span>
+                <strong>Drágább étterem</strong>
+                <small>Válasszunk valami komolyabb helyet.</small>
+              </button>
+            </div>
+          </section>
+
+          <section class="choice-section panel" data-group="after">
+            <div class="section-heading">
+              <div>
+                <span class="section-kicker">03 / Utána</span>
+                <h2>Utána</h2>
+              </div>
+              <span class="required-pill">kötelező</span>
+            </div>
+            <div class="choice-grid">
+              <button type="button" class="choice-card" data-value="Animét nézünk">
+                <span class="choice-icon">◐</span>
+                <strong>Animét nézünk</strong>
+                <small>Választasz animét, megnézzük.</small>
+              </button>
+              <button type="button" class="choice-card" data-value="Sorozatot nézünk">
+                <span class="choice-icon">▤</span>
+                <strong>Sorozatot nézünk</strong>
+                <small>Választasz sorozatot, megnézzük.</small>
+              </button>
+              <button type="button" class="choice-card" data-value="Játszunk valamivel">
+                <span class="choice-icon">✚</span>
+                <strong>Játszunk valamivel</strong>
+                <small>Te választod ki, mivel játsszunk.</small>
+              </button>
+            </div>
+          </section>
+
+          <section class="choice-section panel" data-group="reward">
+            <div class="section-heading">
+              <div>
+                <span class="section-kicker">04 / Extra</span>
+                <h2>Extra</h2>
+              </div>
+              <span class="optional-pill">opcionális</span>
+            </div>
+            <div class="choice-grid">
+              <button type="button" class="choice-card" data-value="Közös ruhavásárlás">
+                <span class="choice-icon">◧</span>
+                <strong>Közös ruhavásárlás</strong>
+                <small>Választasz valami stílusosat, én fizetem.</small>
+              </button>
+              <button type="button" class="choice-card" data-value="Édességcsomag">
+                <span class="choice-icon">◨</span>
+                <strong>Édességcsomag</strong>
+                <small>Összeraksz egy csomagot, én állom.</small>
+              </button>
+              <button type="button" class="choice-card" data-value="Szabad extra">
+                <span class="choice-icon">✧</span>
+                <strong>Szabad extra</strong>
+                <small>Kitalálsz valamit, és megbeszéljük.</small>
+              </button>
+            </div>
+          </section>
+
+          <section class="summary-panel panel" aria-live="polite">
+            <div>
+              <span class="section-kicker">Véglegesítés</span>
+              <h2>Küldetés összegzés</h2>
+            </div>
+            <dl class="summary-list">
+              <div>
+                <dt>Program</dt>
+                <dd id="summaryProgram">Nincs kiválasztva</dd>
+              </div>
+              <div>
+                <dt>Kaja</dt>
+                <dd id="summaryFood">Nincs kiválasztva</dd>
+              </div>
+              <div>
+                <dt>Utána</dt>
+                <dd id="summaryAfter">Nincs kiválasztva</dd>
+              </div>
+              <div>
+                <dt>Extra</dt>
+                <dd id="summaryReward">Nem kötelező</dd>
+              </div>
+            </dl>
+            <div class="action-row">
+              <button type="button" id="resetButton" class="ghost-button">
+                Újrakezdés
+              </button>
+              <button type="button" id="confirmButton" class="primary-button" disabled>
+                Küldetés rögzítése
+              </button>
+            </div>
+            <p id="confirmation" class="confirmation" hidden>
+              Kész. A választás megvan, innentől Zétény intézi a szervezést.
+            </p>
+          </section>
+        </form>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

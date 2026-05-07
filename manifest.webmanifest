@@ -1,0 +1,10 @@
+{
+  "name": "Regő OS",
+  "short_name": "Regő OS",
+  "description": "Személyes születésnapi küldetéskonzol.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#080a0f",
+  "theme_color": "#080a0f",
+  "icons": []
+}
