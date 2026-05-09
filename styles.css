@@ -84,6 +84,7 @@ button {
   );
   animation: scan 5.5s ease-in-out infinite;
   opacity: 0.48;
+  will-change: transform;
 }
 
 .topbar {
@@ -201,9 +202,8 @@ h2 {
   margin: 0 20px 20px;
   border: 1px solid var(--line);
   border-radius: 20px;
-  background: rgba(0, 0, 0, 0.22);
+  background: rgba(0, 0, 0, 0.36);
   padding: 18px;
-  backdrop-filter: blur(18px);
 }
 
 .mission-brief strong {
@@ -226,11 +226,25 @@ h2 {
 }
 
 .panel {
+  position: relative;
+  isolation: isolate;
   border: 1px solid var(--line);
   border-radius: 22px;
-  background: var(--panel);
-  box-shadow: var(--shadow);
-  backdrop-filter: blur(20px);
+  background: linear-gradient(160deg, rgba(18, 25, 40, 0.99), rgba(10, 14, 22, 0.99));
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.06) inset,
+    0 0 80px rgba(0, 0, 0, 0.5),
+    0 24px 80px rgba(0, 0, 0, 0.46);
+}
+
+.panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(122, 255, 203, 0.07) 0%, transparent 38%);
+  pointer-events: none;
+  z-index: -1;
 }
 
 .profile-card {
@@ -354,7 +368,7 @@ h2 {
     border-color 180ms ease,
     background 220ms ease,
     box-shadow 220ms ease,
-    backdrop-filter 220ms ease;
+    outline-color 180ms ease;
 }
 
 .food-bento .food-card:nth-child(1) { border-left-color: rgba(148, 163, 184, 0.35); }
@@ -363,7 +377,6 @@ h2 {
 .food-bento .food-card:nth-child(4) { border-left-color: rgba(251, 191, 36, 0.5); }
 
 .food-card:hover {
-  backdrop-filter: blur(12px);
   transform: translateY(-2px);
 }
 
@@ -375,26 +388,38 @@ h2 {
   box-shadow: -4px 0 24px rgba(251, 191, 36, 0.15), 0 4px 20px rgba(251, 191, 36, 0.1);
 }
 
-/* Tier selected states */
+/* Tier selected states — erős vizuális visszajelzés */
+.food-card.is-selected {
+  transform: translateY(-3px) scale(1.025);
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.food-card.is-selected strong { color: #fff; }
+
 .food-bento .food-card:nth-child(1).is-selected {
-  background: linear-gradient(135deg, rgba(148, 163, 184, 0.1), rgba(0,0,0,0.2));
-  border-left-color: rgba(148, 163, 184, 0.85);
-  box-shadow: -4px 0 20px rgba(148, 163, 184, 0.18);
+  background: linear-gradient(135deg, rgba(148, 163, 184, 0.22), rgba(0, 0, 0, 0.18));
+  border-left-color: rgb(148, 163, 184);
+  outline-color: rgba(148, 163, 184, 0.6);
+  box-shadow: 0 0 28px rgba(148, 163, 184, 0.25), inset 0 0 18px rgba(148, 163, 184, 0.06);
 }
 .food-bento .food-card:nth-child(2).is-selected {
-  background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(0,0,0,0.2));
-  border-left-color: rgba(56, 189, 248, 0.9);
-  box-shadow: -4px 0 20px rgba(56, 189, 248, 0.2);
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.22), rgba(0, 0, 0, 0.18));
+  border-left-color: rgb(56, 189, 248);
+  outline-color: rgba(56, 189, 248, 0.6);
+  box-shadow: 0 0 28px rgba(56, 189, 248, 0.28), inset 0 0 18px rgba(56, 189, 248, 0.07);
 }
 .food-bento .food-card:nth-child(3).is-selected {
-  background: linear-gradient(135deg, rgba(122, 255, 203, 0.1), rgba(0,0,0,0.2));
-  border-left-color: rgba(122, 255, 203, 0.9);
-  box-shadow: -4px 0 20px rgba(122, 255, 203, 0.2);
+  background: linear-gradient(135deg, rgba(122, 255, 203, 0.22), rgba(0, 0, 0, 0.18));
+  border-left-color: rgb(122, 255, 203);
+  outline-color: rgba(122, 255, 203, 0.6);
+  box-shadow: 0 0 28px rgba(122, 255, 203, 0.28), inset 0 0 18px rgba(122, 255, 203, 0.07);
 }
 .food-bento .food-card:nth-child(4).is-selected {
-  background: linear-gradient(135deg, rgba(251, 191, 36, 0.14), rgba(0,0,0,0.2));
-  border-left-color: rgba(251, 191, 36, 1);
-  box-shadow: -4px 0 24px rgba(251, 191, 36, 0.25), 0 4px 20px rgba(251, 191, 36, 0.12);
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.26), rgba(0, 0, 0, 0.18));
+  border-left-color: rgb(251, 191, 36);
+  outline-color: rgba(251, 191, 36, 0.65);
+  box-shadow: 0 0 32px rgba(251, 191, 36, 0.32), inset 0 0 18px rgba(251, 191, 36, 0.08);
 }
 
 .tier-dots {
@@ -417,17 +442,14 @@ h2 {
 
 .after-stack .after-card {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 20px;
-  padding: 22px 22px 22px 28px;
-  min-height: 100px;
+  flex-direction: column;
+  padding: 0;
+  gap: 0;
   text-align: left;
   position: relative;
   overflow: hidden;
   border-radius: 16px;
-  opacity: 0.72;
-  backdrop-filter: blur(3px);
+  opacity: 0.78;
   transition:
     opacity 260ms ease,
     transform 260ms ease,
@@ -436,16 +458,54 @@ h2 {
     border-color 260ms ease;
 }
 
-.after-card:hover { opacity: 1; transform: scale(1.012); }
+.after-card:hover { opacity: 1; transform: scale(1.008); }
 
 /* Dim non-selected when one is active (modern :has() selector) */
 .after-stack:has(.is-selected) .after-card:not(.is-selected) {
-  opacity: 0.38;
-  backdrop-filter: blur(6px);
+  opacity: 0.35;
 }
 .after-stack:has(.is-selected) .after-card.is-selected {
   opacity: 1;
-  transform: scale(1.018);
+  transform: scale(1.014);
+}
+
+/* Képhely (landscape placeholder, user tölti fel a képet) */
+.after-image-wrap {
+  width: 100%;
+  aspect-ratio: 16 / 7;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.8rem;
+  opacity: 0.55;
+  transition: opacity 260ms ease;
+}
+
+.after-card:hover .after-image-wrap,
+.after-card.is-selected .after-image-wrap { opacity: 0.85; }
+
+.after-card--anime  .after-image-wrap { background: linear-gradient(135deg, rgba(192, 132, 252, 0.25), rgba(109, 40, 217, 0.18)); }
+.after-card--series .after-image-wrap { background: linear-gradient(135deg, rgba(34, 211, 238, 0.25), rgba(8, 145, 178, 0.18)); }
+.after-card--game   .after-image-wrap { background: linear-gradient(135deg, rgba(251, 146, 60, 0.25), rgba(234, 88, 12, 0.18)); }
+
+.after-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Tartalom sor a kártya alján */
+.after-body {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+  padding: 18px 22px 18px 28px;
+  flex: 1;
+  min-height: 82px;
 }
 
 .after-accent {
@@ -498,23 +558,22 @@ h2 {
 
 /* ── Reward tokens (Y2K bónusz) ────────────────────────────────────────────── */
 
-.reward-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+.reward-list {
+  display: flex;
+  flex-direction: column;
   gap: 12px;
   margin-top: 18px;
 }
 
 .reward-token {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
-  gap: 12px;
-  min-height: 190px;
-  padding: 24px 16px;
-  border-radius: 20px;
-  text-align: center;
+  gap: 20px;
+  min-height: 96px;
+  padding: 20px 22px;
+  border-radius: 18px;
+  text-align: left;
   position: relative;
   overflow: hidden;
   transition:
@@ -523,6 +582,50 @@ h2 {
     border-color 200ms ease,
     background 200ms ease;
 }
+
+/* Override .choice-card { flex-direction: column } which appears later in the cascade */
+.reward-list .reward-token {
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.reward-icon-wrap {
+  display: grid;
+  width: 58px;
+  height: 58px;
+  place-items: center;
+  border-radius: 14px;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.reward-token--gold  .reward-icon-wrap { border-color: rgba(251, 191, 36, 0.3);  background: rgba(251, 191, 36, 0.08); }
+.reward-token--rose  .reward-icon-wrap { border-color: rgba(236, 72, 153, 0.3);  background: rgba(236, 72, 153, 0.08); }
+.reward-token--prism .reward-icon-wrap { border-color: rgba(139, 92, 246, 0.3);  background: rgba(139, 92, 246, 0.08); }
+
+.reward-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.reward-check {
+  font-size: 1.3rem;
+  font-weight: 950;
+  opacity: 0;
+  transition: opacity 200ms ease, transform 200ms ease;
+  transform: scale(0.6);
+  flex-shrink: 0;
+}
+
+.reward-token.is-selected .reward-check { opacity: 1; transform: scale(1); }
+
+.reward-token--gold  .reward-check { color: #fbbf24; }
+.reward-token--rose  .reward-check { color: #ec4899; }
+.reward-token--prism .reward-check { color: #a78bfa; }
 
 /* Sparkle pozíciók */
 .reward-sparkles {
@@ -611,14 +714,14 @@ h2 {
 }
 
 .reward-icon {
-  font-size: 2.4rem;
+  font-size: 2rem;
   line-height: 1;
   transition: transform 200ms ease;
 }
 
 .reward-token:hover .reward-icon,
 .reward-token.is-selected .reward-icon {
-  transform: scale(1.2) rotate(-8deg);
+  transform: scale(1.18) rotate(-8deg);
 }
 
 .choice-card {
@@ -752,19 +855,14 @@ h2 {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  animation:
-    carousel-float 2.8s ease-in-out infinite,
-    carousel-glow  2.8s ease-in-out infinite;
+  animation: carousel-float 2.8s ease-in-out infinite;
+  filter: drop-shadow(0 8px 28px rgba(122, 255, 203, 0.32));
+  will-change: transform;
 }
 
 @keyframes carousel-float {
   0%, 100% { transform: translateY(0px); }
   50%       { transform: translateY(-14px); }
-}
-
-@keyframes carousel-glow {
-  0%, 100% { filter: drop-shadow(0 6px 18px rgba(122, 255, 203, 0.18)); }
-  50%       { filter: drop-shadow(0 18px 42px rgba(122, 255, 203, 0.52)); }
 }
 
 .carousel-desc {
@@ -1053,6 +1151,7 @@ h2 {
   background: linear-gradient(180deg, transparent, rgba(122, 255, 203, 0.11), transparent);
   animation: scan 6.4s ease-in-out infinite;
   opacity: 0.44;
+  will-change: transform;
 }
 
 .duo-names {
@@ -1159,12 +1258,14 @@ h2 {
 
 .badge-orbit-a {
   animation: orbit-a 9s linear infinite;
+  will-change: transform;
 }
 
 .badge-orbit-b {
   inset: 24px;
   border-color: rgba(255, 207, 90, 0.26);
   animation: orbit-b 7s linear infinite;
+  will-change: transform;
 }
 
 .small-badge {
@@ -1258,6 +1359,35 @@ h2 {
   overflow: hidden;
   min-height: 560px;
   padding: 22px;
+  isolation: isolate;
+}
+
+/* Animált gradient keret a mission-flow körül */
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.mission-flow::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--angle, 0deg),
+    transparent 62%,
+    rgba(122, 255, 203, 0.2) 74%,
+    rgba(138, 125, 255, 0.16) 80%,
+    transparent 88%
+  );
+  z-index: -1;
+  animation: border-spin 7s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes border-spin {
+  to { --angle: 360deg; }
 }
 
 .flow-header {
@@ -1403,6 +1533,19 @@ h2 {
   100% {
     box-shadow: var(--shadow);
   }
+}
+
+/* ── Grain / noise overlay ─────────────────────────────────────────────────── */
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.028;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
 }
 
 @media (prefers-reduced-motion: reduce) {
