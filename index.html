@@ -13,6 +13,27 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
+    <div id="bootOverlay" class="boot-overlay" aria-live="polite" hidden>
+      <div class="boot-grid" aria-hidden="true"></div>
+      <div class="boot-card">
+        <div class="level-ring" id="bootRing" style="--intro-progress: 0deg">
+          <div class="level-ring-inner">
+            <span class="boot-level-label">LEVEL</span>
+            <strong id="bootLevel">13</strong>
+          </div>
+        </div>
+        <div class="mission-badge boot-badge" aria-label="Level 14 Mission Badge">
+          <span class="badge-orbit badge-orbit-a"></span>
+          <span class="badge-orbit badge-orbit-b"></span>
+          <strong>R14</strong>
+          <small>MISSION</small>
+        </div>
+        <p class="boot-kicker">Regő OS boot sequence</p>
+        <h2>Level 14 aktiválás</h2>
+        <p id="bootStatus">Rendszer előkészítése...</p>
+      </div>
+    </div>
+
     <main class="app-shell">
       <section class="hero-panel" aria-labelledby="app-title">
         <div class="ambient-grid" aria-hidden="true"></div>
@@ -51,33 +72,68 @@
         </div>
       </section>
 
-      <section class="console-grid" aria-label="Regő OS választások">
-        <aside class="profile-card panel">
+      <section class="mission-stage" aria-label="Regő OS választások">
+        <aside class="mission-core panel">
+          <div class="core-scanner" aria-hidden="true"></div>
           <div class="profile-top">
             <div>
-              <span class="section-kicker">Profil</span>
-              <h2>Varga Regő</h2>
+              <span class="section-kicker">Mission Core</span>
+              <h2>Duó</h2>
+              <p class="duo-names">Zétény &amp; Regő</p>
             </div>
             <span class="profile-rank">LVL 14</span>
           </div>
+
+          <div class="duo-avatars">
+            <div class="avatar-slot">
+              <div class="avatar-ring">
+                <img src="./Profil/Zétény.png" alt="Zétény">
+              </div>
+              <span class="avatar-label">Zétény</span>
+            </div>
+            <div class="avatar-slot">
+              <div class="avatar-ring">
+                <img src="./Profil/Regő.png" alt="Regő">
+              </div>
+              <span class="avatar-label">Regő</span>
+            </div>
+          </div>
+
           <div class="progress-block">
             <div class="progress-row">
-              <span>Kitöltés</span>
+              <span>Küldetés haladás</span>
               <span id="progressText">0%</span>
             </div>
             <div class="progress-track">
               <span id="progressBar"></span>
             </div>
           </div>
-          <ul class="signal-list">
-            <li><span></span>Közös program Zétivel</li>
-            <li><span></span>Te döntöd el, mi legyen</li>
-            <li><span></span>A kaja külön választás</li>
-          </ul>
+
+          <ol class="mission-map" aria-label="Küldetés lépések">
+            <li><button type="button" data-step-jump="0"><span>01</span>Program</button></li>
+            <li><button type="button" data-step-jump="1"><span>02</span>Kaja</button></li>
+            <li><button type="button" data-step-jump="2"><span>03</span>Utána</button></li>
+            <li><button type="button" data-step-jump="3"><span>04</span>Extra</button></li>
+            <li><button type="button" data-step-jump="4"><span>05</span>Véglegesítés</button></li>
+          </ol>
+
+          <button type="button" id="replayIntroButton" class="ghost-button replay-button">
+            Intro újrajátszása
+          </button>
         </aside>
 
-        <form id="missionForm" class="mission-form">
-          <section class="choice-section panel" data-group="program">
+        <form id="missionForm" class="mission-flow panel">
+          <div class="flow-scanline" aria-hidden="true"></div>
+          <div class="flow-header">
+            <div>
+              <span class="section-kicker" id="stepKicker">01 / Fő választás</span>
+              <h2 id="stepTitle">Program</h2>
+            </div>
+            <span class="required-pill" id="stepPill">kötelező</span>
+          </div>
+
+          <div class="step-viewport">
+            <section class="choice-section mission-step" data-step="0" data-group="program">
             <div class="section-heading">
               <div>
                 <span class="section-kicker">01 / Fő választás</span>
@@ -85,41 +141,69 @@
               </div>
               <span class="required-pill">kötelező</span>
             </div>
-            <div class="choice-grid">
-              <button type="button" class="choice-card" data-value="Biliárd">
-                <span class="choice-icon">◆</span>
-                <strong>Biliárd</strong>
-                <small>Menjünk el biliárdozni.</small>
+
+            <div class="program-carousel">
+              <button type="button" class="carousel-arrow" id="programPrev" aria-label="Előző program">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                  <path d="M13 4L7 10L13 16" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
               </button>
-              <button type="button" class="choice-card" data-value="Darts">
-                <span class="choice-icon">◇</span>
-                <strong>Darts</strong>
-                <small>Nyomjunk egy darts-meccset.</small>
+
+              <div class="carousel-stage">
+                <div class="carousel-item is-active" data-index="0" data-value="Biliárd">
+                  <h3 class="carousel-name">Biliárd</h3>
+                  <div class="carousel-emoji-wrap">
+                    <img src="./program-emojik/billiard_nobg.png" alt="Biliárd" class="carousel-emoji">
+                  </div>
+                  <p class="carousel-desc">Menjünk el biliárdozni.</p>
+                </div>
+                <div class="carousel-item" data-index="1" data-value="Darts">
+                  <h3 class="carousel-name">Darts</h3>
+                  <div class="carousel-emoji-wrap">
+                    <img src="./program-emojik/darts_nobg.png" alt="Darts" class="carousel-emoji">
+                  </div>
+                  <p class="carousel-desc">Nyomjunk egy darts-meccset.</p>
+                </div>
+                <div class="carousel-item" data-index="2" data-value="Mozi">
+                  <h3 class="carousel-name">Mozi</h3>
+                  <div class="carousel-emoji-wrap">
+                    <img src="./program-emojik/mozi_nobg.png" alt="Mozi" class="carousel-emoji">
+                  </div>
+                  <p class="carousel-desc">Válassz filmet, nézzük meg moziban.</p>
+                </div>
+                <div class="carousel-item" data-index="3" data-value="Közös gaming">
+                  <h3 class="carousel-name">Közös gaming</h3>
+                  <div class="carousel-emoji-wrap">
+                    <img src="./program-emojik/gaming_nobg.png" alt="Közös gaming" class="carousel-emoji">
+                  </div>
+                  <p class="carousel-desc">Te választasz játékot, én jövök.</p>
+                </div>
+                <div class="carousel-item" data-index="4" data-value="Kosarazás">
+                  <h3 class="carousel-name">Kosarazás</h3>
+                  <div class="carousel-emoji-wrap">
+                    <img src="./program-emojik/kosarazas_nobg.png" alt="Kosarazás" class="carousel-emoji">
+                  </div>
+                  <p class="carousel-desc">Dobáljunk vagy játsszunk egyet.</p>
+                </div>
+              </div>
+
+              <button type="button" class="carousel-arrow" id="programNext" aria-label="Következő program">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                  <path d="M7 4L13 10L7 16" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
               </button>
-              <button type="button" class="choice-card" data-value="Mozi">
-                <span class="choice-icon">◈</span>
-                <strong>Mozi</strong>
-                <small>Válassz filmet, nézzük meg moziban.</small>
-              </button>
-              <button type="button" class="choice-card" data-value="Közös gaming">
-                <span class="choice-icon">▣</span>
-                <strong>Közös gaming</strong>
-                <small>Te választasz játékot, én jövök.</small>
-              </button>
-              <button type="button" class="choice-card" data-value="Kosarazás">
-                <span class="choice-icon">●</span>
-                <strong>Kosarazás</strong>
-                <small>Dobáljunk vagy játsszunk egyet.</small>
-              </button>
-              <button type="button" class="choice-card" data-value="Kajálós program">
-                <span class="choice-icon">▰</span>
-                <strong>Kajálós program</strong>
-                <small>Legyen a közös kaja a fő program.</small>
-              </button>
+            </div>
+
+            <div class="carousel-dots" aria-hidden="true">
+              <span class="carousel-dot is-active" data-index="0"></span>
+              <span class="carousel-dot" data-index="1"></span>
+              <span class="carousel-dot" data-index="2"></span>
+              <span class="carousel-dot" data-index="3"></span>
+              <span class="carousel-dot" data-index="4"></span>
             </div>
           </section>
 
-          <section class="choice-section panel" data-group="food">
+          <section class="choice-section mission-step" data-step="1" data-group="food">
             <div class="section-heading">
               <div>
                 <span class="section-kicker">02 / Kaja választás</span>
@@ -127,31 +211,31 @@
               </div>
               <span class="required-pill">kötelező</span>
             </div>
-            <div class="choice-grid">
-              <button type="button" class="choice-card" data-value="Gyorskajálda">
-                <span class="choice-icon">▸</span>
+            <div class="food-bento">
+              <button type="button" class="choice-card food-card" data-value="Gyorskajálda">
+                <span class="tier-dots">◆</span>
                 <strong>Gyorskajálda</strong>
                 <small>McDonald's, KFC vagy amit választasz.</small>
               </button>
-              <button type="button" class="choice-card" data-value="Pizza">
-                <span class="choice-icon">▲</span>
+              <button type="button" class="choice-card food-card" data-value="Pizza">
+                <span class="tier-dots">◆◆</span>
                 <strong>Pizza</strong>
                 <small>Pizza ott, ahol neked szimpatikus.</small>
               </button>
-              <button type="button" class="choice-card" data-value="Kézműves hamburger">
-                <span class="choice-icon">⬡</span>
+              <button type="button" class="choice-card food-card" data-value="Kézműves hamburger">
+                <span class="tier-dots">◆◆◆</span>
                 <strong>Kézműves hamburger</strong>
                 <small>Egy jobb burgeres helyen.</small>
               </button>
-              <button type="button" class="choice-card" data-value="Drágább étterem">
-                <span class="choice-icon">✦</span>
+              <button type="button" class="choice-card food-card food-card--premium" data-value="Drágább étterem">
+                <span class="tier-dots">◆◆◆◆</span>
                 <strong>Drágább étterem</strong>
                 <small>Válasszunk valami komolyabb helyet.</small>
               </button>
             </div>
           </section>
 
-          <section class="choice-section panel" data-group="after">
+          <section class="choice-section mission-step" data-step="2" data-group="after">
             <div class="section-heading">
               <div>
                 <span class="section-kicker">03 / Utána</span>
@@ -159,26 +243,35 @@
               </div>
               <span class="required-pill">kötelező</span>
             </div>
-            <div class="choice-grid">
-              <button type="button" class="choice-card" data-value="Animét nézünk">
-                <span class="choice-icon">◐</span>
-                <strong>Animét nézünk</strong>
-                <small>Választasz animét, megnézzük.</small>
+            <div class="after-stack">
+              <button type="button" class="choice-card after-card after-card--anime" data-value="Animét nézünk">
+                <div class="after-accent" aria-hidden="true"></div>
+                <div class="after-content">
+                  <strong>Animét nézünk</strong>
+                  <small>Választasz animét, megnézzük.</small>
+                </div>
+                <span class="after-icon" aria-hidden="true">◐</span>
               </button>
-              <button type="button" class="choice-card" data-value="Sorozatot nézünk">
-                <span class="choice-icon">▤</span>
-                <strong>Sorozatot nézünk</strong>
-                <small>Választasz sorozatot, megnézzük.</small>
+              <button type="button" class="choice-card after-card after-card--series" data-value="Sorozatot nézünk">
+                <div class="after-accent" aria-hidden="true"></div>
+                <div class="after-content">
+                  <strong>Sorozatot nézünk</strong>
+                  <small>Választasz sorozatot, megnézzük.</small>
+                </div>
+                <span class="after-icon" aria-hidden="true">▤</span>
               </button>
-              <button type="button" class="choice-card" data-value="Játszunk valamivel">
-                <span class="choice-icon">✚</span>
-                <strong>Játszunk valamivel</strong>
-                <small>Te választod ki, mivel játsszunk.</small>
+              <button type="button" class="choice-card after-card after-card--game" data-value="Játszunk valamivel">
+                <div class="after-accent" aria-hidden="true"></div>
+                <div class="after-content">
+                  <strong>Játszunk valamivel</strong>
+                  <small>Te választod ki, mivel játsszunk.</small>
+                </div>
+                <span class="after-icon" aria-hidden="true">✚</span>
               </button>
             </div>
           </section>
 
-          <section class="choice-section panel" data-group="reward">
+          <section class="choice-section mission-step" data-step="3" data-group="reward">
             <div class="section-heading">
               <div>
                 <span class="section-kicker">04 / Extra</span>
@@ -186,27 +279,38 @@
               </div>
               <span class="optional-pill">opcionális</span>
             </div>
-            <div class="choice-grid">
-              <button type="button" class="choice-card" data-value="Közös ruhavásárlás">
-                <span class="choice-icon">◧</span>
+            <div class="reward-row">
+              <button type="button" class="choice-card reward-token reward-token--gold" data-value="Közös ruhavásárlás">
+                <div class="reward-sparkles" aria-hidden="true"><span></span><span></span><span></span></div>
+                <span class="reward-icon">◧</span>
                 <strong>Közös ruhavásárlás</strong>
                 <small>Választasz valami stílusosat, én fizetem.</small>
               </button>
-              <button type="button" class="choice-card" data-value="Édességcsomag">
-                <span class="choice-icon">◨</span>
+              <button type="button" class="choice-card reward-token reward-token--rose" data-value="Édességcsomag">
+                <div class="reward-sparkles" aria-hidden="true"><span></span><span></span><span></span></div>
+                <span class="reward-icon">◨</span>
                 <strong>Édességcsomag</strong>
                 <small>Összeraksz egy csomagot, én állom.</small>
               </button>
-              <button type="button" class="choice-card" data-value="Szabad extra">
-                <span class="choice-icon">✧</span>
+              <button type="button" class="choice-card reward-token reward-token--prism" data-value="Szabad extra">
+                <div class="reward-sparkles" aria-hidden="true"><span></span><span></span><span></span></div>
+                <span class="reward-icon">✧</span>
                 <strong>Szabad extra</strong>
                 <small>Kitalálsz valamit, és megbeszéljük.</small>
               </button>
             </div>
           </section>
 
-          <section class="summary-panel panel" aria-live="polite">
-            <div>
+          <section class="summary-panel mission-step" data-step="4" aria-live="polite">
+            <div class="summary-badge-row">
+              <div class="mission-badge small-badge" aria-label="Level 14 Mission Badge">
+                <span class="badge-orbit badge-orbit-a"></span>
+                <span class="badge-orbit badge-orbit-b"></span>
+                <strong>R14</strong>
+                <small>MISSION</small>
+              </div>
+            </div>
+            <div class="summary-heading">
               <span class="section-kicker">Véglegesítés</span>
               <h2>Küldetés összegzés</h2>
             </div>
@@ -240,6 +344,17 @@
               Kész. A választás megvan, innentől Zétény intézi a szervezést.
             </p>
           </section>
+          </div>
+
+          <div class="flow-controls">
+            <button type="button" id="prevStepButton" class="ghost-button">
+              Vissza
+            </button>
+            <div class="step-counter" id="stepCounter">01 / 05</div>
+            <button type="button" id="nextStepButton" class="primary-button">
+              Tovább
+            </button>
+          </div>
         </form>
       </section>
     </main>
